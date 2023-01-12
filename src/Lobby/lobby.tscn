@@ -1,8 +1,54 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/fonts/Square.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/UI assets pack 2/UI books & more.png" type="Texture" id=2]
 [ext_resource path="res://src/Lobby/lobby.gd" type="Script" id=3]
+[ext_resource path="res://src/transition/transition.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "In"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Out"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
@@ -51,9 +97,33 @@ outline_color = Color( 0, 0, 0, 0.0666667 )
 use_mipmaps = true
 font_data = ExtResource( 1 )
 
+[sub_resource type="DynamicFont" id=15]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.00784314, 0.00784314, 0.00784314, 0.192157 )
+corner_radius_top_left = 3
+corner_radius_bottom_left = 3
+
 [node name="Lobby" type="Control"]
 mouse_filter = 1
 script = ExtResource( 3 )
+
+[node name="Transition" type="AnimationPlayer" parent="."]
+anims/In = SubResource( 1 )
+anims/Out = SubResource( 2 )
+anims/RESET = SubResource( 14 )
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="Transition"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
 
 [node name="Book" type="Control" parent="."]
 margin_left = 37.0
@@ -189,6 +259,19 @@ flat = true
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 445.0
+margin_top = 500.0
+margin_right = 587.0
+margin_bottom = 528.0
+custom_fonts/font = SubResource( 15 )
+custom_styles/read_only = SubResource( 17 )
+custom_styles/focus = SubResource( 18 )
+custom_styles/normal = SubResource( 16 )
+align = 1
+placeholder_text = "Player"
+caret_blink = true
 
 [connection signal="pressed" from="Buttons/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Buttons/Login" to="." method="_on_login_pressed"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/chat_room/chat_room.gd" type="Script" id=1]
 [ext_resource path="res://assets/UI assets pack 2/UI books & more.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/Square.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://src/transition/transition.gd" type="Script" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -19,9 +20,17 @@ outline_color = Color( 1, 0.74902, 0.45098, 0.172549 )
 extra_spacing_char = 1
 font_data = ExtResource( 3 )
 
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 384, 272, 16, 16 )
+
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
-region = Rect2( 16, 272, 32, 16 )
+region = Rect2( 352, 256, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 400, 272, 16, 16 )
 
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 3 )
@@ -35,6 +44,51 @@ font_data = ExtResource( 3 )
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 2 )
 region = Rect2( 768, 208, 16, 16 )
+
+[sub_resource type="Animation" id=15]
+resource_name = "In"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Out"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
 
 [node name="ChatRoom" type="Control"]
 anchor_right = 1.0
@@ -107,29 +161,134 @@ margin_right = 19.0
 margin_bottom = 67.0
 mouse_filter = 2
 
-[node name="Panel" type="TextureRect" parent="Send/Pin"]
-anchor_left = -0.017
-anchor_right = 0.613
-anchor_bottom = 0.073
-margin_left = 80.48
+[node name="Background" type="Control" parent="Send/Pin"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -35.0
+margin_right = -35.0
+
+[node name="Panel" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 66.8
 margin_top = 475.0
-margin_right = 80.48
-margin_bottom = 475.0
+margin_right = 66.6
+margin_bottom = 502.0
+texture = SubResource( 11 )
+expand = true
+
+[node name="Panel3" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 105.8
+margin_top = 475.0
+margin_right = 105.6
+margin_bottom = 502.0
 texture = SubResource( 5 )
 expand = true
 
+[node name="Panel4" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 146.8
+margin_top = 475.0
+margin_right = 146.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel5" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 178.8
+margin_top = 475.0
+margin_right = 178.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel6" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 202.8
+margin_top = 475.0
+margin_right = 202.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel7" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 245.8
+margin_top = 475.0
+margin_right = 245.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel8" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 288.8
+margin_top = 475.0
+margin_right = 288.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel9" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 331.8
+margin_top = 475.0
+margin_right = 331.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel10" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 374.8
+margin_top = 475.0
+margin_right = 374.6
+margin_bottom = 502.0
+texture = SubResource( 5 )
+expand = true
+
+[node name="Panel11" type="TextureRect" parent="Send/Pin/Background"]
+anchor_left = 0.055
+anchor_right = 0.127
+anchor_bottom = 0.039
+margin_left = 410.8
+margin_top = 475.0
+margin_right = 410.6
+margin_bottom = 502.0
+texture = SubResource( 12 )
+expand = true
+
 [node name="WritingLine" type="LineEdit" parent="Send/Pin"]
-margin_left = 108.0
-margin_top = 487.0
-margin_right = 413.0
-margin_bottom = 511.0
+margin_left = 101.0
+margin_top = 485.0
+margin_right = 421.0
+margin_bottom = 517.0
 mouse_filter = 1
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 4 )
 custom_styles/read_only = SubResource( 6 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/normal = SubResource( 9 )
-text = "oi"
+caret_blink = true
 
 [node name="Confim" type="TextureButton" parent="Send"]
 margin_left = 467.0
@@ -138,5 +297,18 @@ margin_right = 570.0
 margin_bottom = 607.0
 texture_normal = SubResource( 8 )
 expand = true
+
+[node name="Transition" type="AnimationPlayer" parent="."]
+anims/In = SubResource( 15 )
+anims/Out = SubResource( 2 )
+anims/RESET = SubResource( 14 )
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="Transition"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
 
 [connection signal="button_up" from="Send/Confim" to="." method="_on_confim_button_up"]
