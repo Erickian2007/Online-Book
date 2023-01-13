@@ -6,7 +6,8 @@ func _enter_tree() -> void:
 func _process(delta: float) -> void:
 	if $LineEdit.text != "":
 		Networking.nome = $LineEdit.text
-	
+		
+		
 func _on_host_pressed() -> void:
 	Networking.create_server()
 	$Transition.going()

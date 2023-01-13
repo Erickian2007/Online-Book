@@ -8,21 +8,29 @@ onready var confirm: TextureButton = get_node("Send/Confim")
 func _enter_tree() -> void:
 	$Transition.leaving()
 	
+func _ready() -> void:
+	Networking.connect("new_peer", self, "new_peer_connected")
+	
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("enter"):
+	if Input.is_action_just_pressed("enter") and writing_line.text != "":
 		send_message()
 		
-	get_historic()
-		
-		
-func get_historic() -> void:
-	if get_tree().is_network_server():
-		var historic: String = rich_text_label.bbcode_text
-		rpc("send_historic", historic)
-		
 	
-remotesync func send_historic(historic) -> void:
-	rich_text_label.bbcode_text = historic
+func new_peer_connected(id: int) -> void:
+	get_historic()
+	rpc_id(id, "send_historic", get_historic())
+	print(id)
+	
+remote func send_historic(historic) -> void:
+	rich_text_label.bbcode_text = str(historic)
+	
+func get_historic() -> String:
+	var historic: String
+	if get_tree().is_network_server():
+		historic = rich_text_label.bbcode_text
+		print("send_historic")
+	return historic
+	
 	
 func send_message() -> void:
 	var message: String = writing_line.text + "\n"
@@ -33,4 +41,5 @@ sync func reseive_message(message, nome) -> void:
 	rich_text_label.bbcode_text += str(nome) + ": " + message
 	
 func _on_confim_button_up() -> void:
-	send_message()
+	if writing_line.text != "":
+		send_message()
