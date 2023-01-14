@@ -18,19 +18,15 @@ func _process(_delta: float) -> void:
 	
 func new_peer_connected(id: int) -> void:
 	get_historic()
-	rpc_id(id, "send_historic", get_historic())
-	print(id)
 	
 remote func send_historic(historic) -> void:
 	rich_text_label.bbcode_text = str(historic)
 	
-func get_historic() -> String:
-	var historic: String
+func get_historic() -> void:
 	if get_tree().is_network_server():
-		historic = rich_text_label.bbcode_text
-		print("send_historic")
-	return historic
-	
+		var historic: String = rich_text_label.bbcode_text
+		rpc("send_historic", historic)
+		
 	
 func send_message() -> void:
 	var message: String = writing_line.text + "\n"
